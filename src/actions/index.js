@@ -17,6 +17,13 @@ export const heroesFetchingError = () => {
     };
 };
 
+export const heroAddToList = hero => {
+    return {
+        type: 'HERO_CREATE',
+        payload: hero,
+    };
+};
+
 export const heroDelete = id => {
     return {
         type: 'HERO_DELETE',
