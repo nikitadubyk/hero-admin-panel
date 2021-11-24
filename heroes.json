@@ -1,29 +1,54 @@
 {
-  "heroes": [
-    {
-      "id": 1,
-      "name": "Неизвестный герой",
-      "description": "Крутой чувачок",
-      "element": "fire"
-    },
-    {
-      "id": 2,
-      "name": "Неизвестный герой",
-      "description": "Скрывающийся в тени",
-      "element": "wind"
-    },
-    {
-      "id": 3,
-      "name": "Морской герой",
-      "description": "Как аквамен, но не из DC",
-      "element": "water"
-    }
-  ],
-  "filters": [
-    "all",
-    "fire",
-    "water",
-    "wind",
-    "earth"
-  ]
+    "heroes": [
+        {
+            "id": 1,
+            "name": "Неизвестный герой",
+            "description": "Крутой чувачок",
+            "element": "fire"
+        },
+        {
+            "id": 2,
+            "name": "Неизвестный герой",
+            "description": "Скрывающийся в тени",
+            "element": "wind"
+        },
+        {
+            "id": 3,
+            "name": "Морской герой",
+            "description": "Как аквамен, но не из DC",
+            "element": "water"
+        }
+    ],
+    "filters": [
+        {
+            "id": 1,
+            "title": "Все",
+            "value": "all",
+            "className": "btn-outline-dark"
+        },
+        {
+            "id": 2,
+            "title": "Огонь",
+            "value": "fire",
+            "className": "btn-danger"
+        },
+        {
+            "id": 3,
+            "title": "Вода",
+            "value": "water",
+            "className": "btn-primary"
+        },
+        {
+            "id": 4,
+            "title": "Ветер",
+            "value": "wind",
+            "className": "btn-success"
+        },
+        {
+            "id": 5,
+            "title": "Земля",
+            "value": "earth",
+            "className": "btn-secondary"
+        }
+    ]
 }

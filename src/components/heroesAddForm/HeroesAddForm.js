@@ -1,18 +1,8 @@
-import { useState } from 'react';
-import { heroAddToList } from '../../actions';
-import { useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { heroAddToList, filtersFetched } from '../../actions';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHttp } from '../../hooks/http.hook';
 import { v4 as uuidv4 } from 'uuid';
-
-// Задача для этого компонента:
-// Реализовать создание нового героя с введенными данными. Он должен попадать
-// в общее состояние и отображаться в списке + фильтроваться
-// Уникальный идентификатор персонажа можно сгенерировать через uiid
-// Усложненная задача:
-// Персонаж создается и в файле json при помощи метода POST
-// Дополнительно:
-// Элементы <option></option> желательно сформировать на базе
-// данных из фильтров
 
 const HeroesAddForm = () => {
     const [heroName, setHeroName] = useState('');
@@ -20,6 +10,7 @@ const HeroesAddForm = () => {
     const [heroOption, setHeroOption] = useState('');
 
     const { request } = useHttp();
+    const { filters } = useSelector(state => state);
     const dispatch = useDispatch();
 
     const onSubmit = e => {
@@ -38,6 +29,16 @@ const HeroesAddForm = () => {
         setHeroDescription('');
         setHeroOption('');
     };
+
+    useEffect(() => {
+        const fetching = () => {
+            request('http://localhost:3001/filters')
+                .then(res => dispatch(filtersFetched(res)))
+                .catch(e => console.log(e));
+        };
+        fetching();
+        //eslint-disable-next-line
+    }, []);
 
     return (
         <form className='border p-4 shadow-lg rounded' onSubmit={onSubmit}>
@@ -86,10 +87,11 @@ const HeroesAddForm = () => {
                     onChange={e => setHeroOption(e.target.value)}
                 >
                     <option>Я владею элементом...</option>
-                    <option value='fire'>Огонь</option>
-                    <option value='water'>Вода</option>
-                    <option value='wind'>Ветер</option>
-                    <option value='earth'>Земля</option>
+                    {filters.map(({ id, title, value }) => (
+                        <option value={value} key={id}>
+                            {title}
+                        </option>
+                    ))}
                 </select>
             </div>
 
