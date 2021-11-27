@@ -21,6 +21,14 @@ export const filtersFetched = filters => {
     return { type: 'FILTERS_FETCHED', payload: filters };
 };
 
+export const activeFilterChange = filter => {
+    return { type: 'FILTER_CHANGE', payload: filter };
+};
+
+export const filterAllElements = () => {
+    return { type: 'FILTER_ELEMENTS' };
+};
+
 export const heroAddToList = hero => {
     return {
         type: 'HERO_CREATE',

@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHttp } from '../../hooks/http.hook';
-import { filtersFetched } from '../../actions';
+import {
+    filtersFetched,
+    activeFilterChange,
+    filterAllElements,
+} from '../../actions';
 import classNames from 'classnames';
 
 // Задача для этого компонента:
@@ -34,7 +38,14 @@ const HeroesFilters = () => {
                         });
 
                         return (
-                            <button className={btnClass} key={id}>
+                            <button
+                                className={btnClass}
+                                key={id}
+                                onClick={() => {
+                                    dispatch(activeFilterChange(value));
+                                    dispatch(filterAllElements());
+                                }}
+                            >
                                 {title}
                             </button>
                         );
