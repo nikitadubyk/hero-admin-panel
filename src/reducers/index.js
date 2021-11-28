@@ -53,6 +53,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 heroes: [...state.heroes, action.payload],
+                filteredHeroes: [...state.heroes, action.payload],
             };
         case 'HERO_DELETE':
             const newHeroesList = state.heroes.filter(
@@ -61,13 +62,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 heroes: newHeroesList,
+                filteredHeroes: newHeroesList,
             };
         default:
             return state;
     }
-    // TODO:
-    // при создании/удалении не обновляется
-    // при добавлении не фильтруется новый элемент
 };
 
 export default reducer;
