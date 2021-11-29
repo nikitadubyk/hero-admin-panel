@@ -53,7 +53,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 heroes: [...state.heroes, action.payload],
-                filteredHeroes: [...state.heroes, action.payload],
+                filteredHeroes:
+                    state.activeFilter === 'all'
+                        ? [...state.heroes, action.payload]
+                        : state.heroes.filter(
+                              item => item.element === state.activeFilter
+                          ),
             };
         case 'HERO_DELETE':
             const newHeroesList = state.heroes.filter(
