@@ -17,8 +17,16 @@ export const heroesFetchingError = () => {
     };
 };
 
+export const filtersFetching = () => {
+    return { type: 'FILTERS_FETCHING' };
+};
+
 export const filtersFetched = filters => {
     return { type: 'FILTERS_FETCHED', payload: filters };
+};
+
+export const filtersFetchingError = () => {
+    return { type: 'FILTERS_FITCHING_ERROR' };
 };
 
 export const activeFilterChange = filter => {

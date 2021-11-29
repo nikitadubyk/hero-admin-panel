@@ -1,24 +1,36 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHttp } from '../../hooks/http.hook';
+import Spinner from '../spinner/Spinner';
 import {
     filtersFetched,
     activeFilterChange,
     filterAllElements,
+    filtersFetching,
+    filtersFetchingError,
 } from '../../actions';
 import classNames from 'classnames';
 
 const HeroesFilters = () => {
     const { request } = useHttp();
-    const { filters, activeFilter } = useSelector(state => state);
+    const { filters, activeFilter, filtersLoadingStatus } = useSelector(
+        state => state
+    );
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(filtersFetching());
         request('http://localhost:3001/filters')
             .then(res => dispatch(filtersFetched(res)))
-            .catch(e => console.log(e));
+            .catch(() => dispatch(filtersFetchingError));
         //eslint-disable-next-line
     }, []);
+
+    if (filtersLoadingStatus === 'loading') {
+        return <Spinner />;
+    } else if (filtersLoadingStatus === 'error') {
+        return <h5 className='text-center mt-5'>Ошибка при загрузки</h5>;
+    }
 
     return (
         <div className='card shadow-lg mt-4'>
