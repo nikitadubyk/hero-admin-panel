@@ -5,7 +5,6 @@ import Spinner from '../spinner/Spinner';
 import {
     filtersFetched,
     activeFilterChange,
-    filterAllElements,
     filtersFetching,
     filtersFetchingError,
 } from '../../actions';
@@ -14,7 +13,7 @@ import classNames from 'classnames';
 const HeroesFilters = () => {
     const { request } = useHttp();
     const { filters, activeFilter, filtersLoadingStatus } = useSelector(
-        state => state
+        state => state.filters
     );
     const dispatch = useDispatch();
 
@@ -48,7 +47,6 @@ const HeroesFilters = () => {
                                 key={id}
                                 onClick={() => {
                                     dispatch(activeFilterChange(value));
-                                    dispatch(filterAllElements());
                                 }}
                             >
                                 {title}
