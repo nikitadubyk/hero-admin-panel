@@ -27,7 +27,7 @@ const HeroesList = () => {
         }
     );
 
-    const filteredHeroes = useSelector(filteredHeroesSelector());
+    const filteredHeroes = useSelector(filteredHeroesSelector);
 
     const heroesLoadingStatus = useSelector(state => state.heroesLoadingStatus);
     const dispatch = useDispatch();
