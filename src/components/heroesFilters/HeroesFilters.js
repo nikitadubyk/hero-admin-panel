@@ -2,12 +2,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHttp } from '../../hooks/http.hook';
 import Spinner from '../spinner/Spinner';
-import {
-    filtersFetched,
-    activeFilterChange,
-    filtersFetching,
-    filtersFetchingError,
-} from '../../actions';
+import { fetchFilters, activeFilterChange } from '../../actions';
 import classNames from 'classnames';
 
 const HeroesFilters = () => {
@@ -18,10 +13,7 @@ const HeroesFilters = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(filtersFetching());
-        request('http://localhost:3001/filters')
-            .then(res => dispatch(filtersFetched(res)))
-            .catch(() => dispatch(filtersFetchingError));
+        dispatch(fetchFilters(request));
         //eslint-disable-next-line
     }, []);
 
