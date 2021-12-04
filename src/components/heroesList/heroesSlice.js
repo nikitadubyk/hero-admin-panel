@@ -1,10 +1,21 @@
 import { useHttp } from '../../hooks/http.hook';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+    createSlice,
+    createAsyncThunk,
+    createEntityAdapter,
+    createSelector,
+} from '@reduxjs/toolkit';
 
-const initialState = {
-    heroes: [],
+const heroesAdapter = createEntityAdapter();
+
+// const initialState = {
+//     heroes: [],
+//     heroesLoadingStatus: 'idle',
+// };
+
+const initialState = heroesAdapter.getInitialState({
     heroesLoadingStatus: 'idle',
-};
+});
 
 export const fetchHeroes = createAsyncThunk('heroes/fetchHeroes', async () => {
     const { request } = useHttp();
@@ -16,12 +27,10 @@ const heroesSlice = createSlice({
     initialState,
     reducers: {
         heroDelete: (state, action) => {
-            state.heroes = state.heroes.filter(
-                item => item.id !== action.payload
-            );
+            heroesAdapter.removeOne(state, action.payload);
         },
         heroAddToList: (state, action) => {
-            state.heroes.push(action.payload);
+            heroesAdapter.addOne(state, action.payload);
         },
     },
     extraReducers: builder => {
@@ -31,7 +40,7 @@ const heroesSlice = createSlice({
             })
             .addCase(fetchHeroes.fulfilled, (state, action) => {
                 state.heroesLoadingStatus = 'idle';
-                state.heroes = action.payload;
+                heroesAdapter.setAll(state, action.payload);
             })
             .addCase(fetchHeroes.rejected, state => {
                 state.heroesLoadingStatus = 'error';
@@ -39,6 +48,20 @@ const heroesSlice = createSlice({
             .addDefaultCase(() => {});
     },
 });
+
+const { selectAll } = heroesAdapter.getSelectors(state => state.heroes);
+
+export const filteredHeroesSelector = createSelector(
+    state => state.filters.activeFilter,
+    selectAll,
+    (filter, heroes) => {
+        if (filter === 'all') {
+            return heroes;
+        } else {
+            return heroes.filter(item => item.element === filter);
+        }
+    }
+);
 
 export const { heroDelete, heroAddToList } = heroesSlice.actions;
 export default heroesSlice.reducer;
