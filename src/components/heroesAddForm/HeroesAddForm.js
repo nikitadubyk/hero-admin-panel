@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { heroAddToList } from '../heroesList/heroesSlice';
-import { filtersFetched } from '../heroesFilters/heroesFilterSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHttp } from '../../hooks/http.hook';
 import { v4 as uuidv4 } from 'uuid';
@@ -30,16 +29,6 @@ const HeroesAddForm = () => {
         setHeroDescription('');
         setHeroOption('');
     };
-
-    useEffect(() => {
-        const fetching = () => {
-            request('http://localhost:3001/filters')
-                .then(res => dispatch(filtersFetched(res)))
-                .catch(e => console.log(e));
-        };
-        fetching();
-        //eslint-disable-next-line
-    }, []);
 
     return (
         <form className='border p-4 shadow-lg rounded' onSubmit={onSubmit}>
